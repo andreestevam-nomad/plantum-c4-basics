@@ -1,0 +1,31 @@
+@startuml "model"
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/v2.0.1/C4_Deployment.puml
+!include https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v2.4.0/devicons/django.puml
+!include https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v2.4.0/devicons/python.puml
+!includeurl https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v11.1/dist/AWSCommon.puml
+
+LAYOUT_TOP_DOWN()
+LAYOUT_WITH_LEGEND()
+
+Person(customer, "Customer", "Person description")
+
+Person(operator, "Operator", "Person description")
+
+Container_Boundary(ContainerBoundaryAlias1, "ContainerBoundary 1") {
+    Container_Boundary(ContainerBoundaryAlias2, "ContainerBoundary 2") {
+        Container(Container1, "Container1","Container 1","Container 1 description", $sprite=django)
+    }
+}
+
+System_Boundary(PartnerBoundary, "Partner") {
+    System_Ext(PartnerApi, "Partner Redemptions API", "Manages Redemptions on Partner")
+
+}
+
+Rel_D(customer, Container1, "Relation Name", "Relation description/technology")
+Rel(Container1, PartnerApi, "Something request", "HTTP")
+Rel_U(PartnerApi, Container1, "Something webhook request", "HTTP")
+Rel_L(operator, Container1, "Something webhook request", "HTTP")
+
+@enduml
